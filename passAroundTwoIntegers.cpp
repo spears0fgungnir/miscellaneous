@@ -16,6 +16,7 @@ public:
 		val = x;
 		ready = true;
 		cv.notify_one();
+		cv.wait(lock, [&] {return !ready});
 	}
 	void receive(){
 		std::unique_lock<std::mutex> lock(mtx);
@@ -46,8 +47,8 @@ void thread_B(Channel& AB, Channel& BA){
 	
 int main(){
 	Channel ab, ba;
-	std::thread thread_A(ab, ba);
-	std::thread thread_B(ab, ba);
+	std::thread thread_A(std::ref(ab), std::ref(ba));
+	std::thread thread_B(std::ref(ab), std::ref(ba));
 
 	thread_A.join();
 	thread_B.join();
