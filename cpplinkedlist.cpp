@@ -3,8 +3,7 @@
 #include <memory>
 
 template <typename T>
-class Node{
-public:
+struct Node{
   T data;
   std::unique_ptr<Node<T>>next;
   Node(T n_data):data(n_data),next(nullptr){}
