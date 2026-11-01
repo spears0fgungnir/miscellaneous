@@ -1,0 +1,30 @@
+#include <bits/stdc++.h>
+using namespace std;
+// Minesweeper grid
+
+
+int main(void){
+	int n,m,i=0;cin>>n>>m;
+	char grid[n*m];string ln;
+	while(getline(cin,ln))
+		for(char&x:ln)grid[i++]=x;
+	for(int gx=0;gx<n;gx++){
+		for(int gy=0;gy<m;gy++){
+			if(grid[gx*m+gy]=='*'){
+				cout<<'*';
+				continue;
+			}
+			int cnt=0;
+			for(int x=-1;x<2;x++){
+				for(int y=-1;y<2;y++){
+					int nx=gx+x,ny=gy+y;
+					if((x!=0||y!=0)&&nx>=0&&nx<m&&ny>=0&&ny<n)
+						if(grid[nx*m+ny]=='*')cnt++;
+				}
+			}
+			cout<<cnt;
+		}
+		cout<<'\n';
+	}
+	return 0;
+}
